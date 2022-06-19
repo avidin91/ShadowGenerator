@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS-генератор теней</title>
+</head>
+<body>
+    <div class="header">
+        <p>Генератор теней для CSS-стилей</p>
+    </div>
+    <ol>
+        <p>Добро пожаловать. На этом сайте вы можете сгенерировать код тени:</p> 
+        <li>Выберите необходимые настройки;</li>
+        <li>Скопируйте получившийся код;</li>
+        <li>Так же вы можете загрузить картинку и посмотреть, как тень будет выглядеть на ней.</li>
+    </ol>
+    <div class="box">
+        <div class="formBox">
+            <form name="form">
+                <p class="pRange" >Настройте параметры тени:</p>
+                <p class="pRange" >
+                    <input type="checkbox" name="inset"> тень внутри элемента
+                </p>
+                <p class="pRange" >Горизонтальное смещение<br>
+                    <input class="filter" type="range" name="offsetX" min="-100" max="100" value="22"> 
+                </p>
+                <p class="pRange" >Вертикальное смещение<br>
+                    <input class="filter" type="range" name="offsetY" min="-100" max="100" value="-22">
+                </p>
+                <p class="pRange" >Размытие<br>
+                    <input class="filter" type="range" name="blurRadius" min="0" max="100" value="18">
+                </p>
+                <p class="pRange" >Растяжение<br>
+                    <input class="filter" type="range" name="spreadRadius" min="-100" max="100" value="-2">
+                </p>
+                <p class="pRange" >Цвет тени<br>
+                    <input type="color" name="color" value="#ffd2f0">
+                </p>
+                <p class="pRange" >Цвет фона<br>
+                    <input type="color" name="colorBcg" value="#e3c3f8">
+                </p>
+                <p class="pRange" >Прозрачность<br>
+                    <input class="filter" type="range" name="transparent" step="0.01" min="0" max="1" value="1">
+                </p>
+                <p class="pRange" >Изображение фона<br>
+                    <input type="file" name="file" onchange="previewFile(this);">
+                </p>
+            </form>
+            
+        </div>
+        <div class="result">
+            <div class="example" style="box-shadow: 22px -22px 18px -2px rgb(255, 210, 240); background-color: rgb(227, 195, 248);" ></div>
+            <p class="pRange" ><span class="textAreaCSS">{CSS}</span> код тени для вставки:<br>
+                <textarea id="resultCssText" cols="30" rows="10" readonly></textarea>
+            </p>
+        </div>
+    </div>
+
+    <style>
+    body{
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        background: linear-gradient(63deg, rgb(246, 235, 252) 3%, rgb(220, 240, 238) 77%);
+    }
+    .header {
+        display: flex;
+        height: 80px;
+        width: 100%;
+        background: linear-gradient(90deg, rgba(165,91,215,1) 0%, rgb(240, 131, 131) 50%, rgb(145, 236, 193) 100%);
+    }
+    .header p {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 40px;
+        font-weight: 100;
+        margin: auto;
+        color: rgb(252, 252, 252);
+    }
+    ol {
+        margin: 20px auto 10px;
+    }
+    ol p {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+        font-weight: 100;
+        margin: 7px 0 0 20px;
+        color: rgb(58, 53, 53);
+    }
+    li {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 15px;
+        font-weight: 100;
+        margin: 5px 0 0 20px;
+        color: rgb(58, 53, 53);
+    }
+    .box{
+        width: 1200px;
+        height: 700px;
+        padding-top: 50px;
+        background-color: rgb(255, 255, 255, 0.9);
+        border-radius: 10px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-around;
+        box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2) inset;
+    }
+    form{
+        display: flex;
+        flex-direction: column;
+    }
+    .example{
+        display: flex;
+        height: 400px; 
+        width: 400px;
+        margin: 10px auto;
+        border-radius: 20px;
+        padding: 0;
+    }
+    .pRange {
+        margin: 10px 0 0 0;
+    }
+    .filter {
+        width: 270px;
+        height: 20px;
+        background: #eee;
+        border-radius: 3px;
+        box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+        cursor: pointer;
+        margin: 7px 0 0 0;
+        background: transparent;
+        -webkit-appearance: none;
+        overflow: hidden;
+        
+    }
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        border: 1px solid #858181;
+        height: 20px;
+        width: 13px;
+        border-radius: 3px;
+        background: #ffffff;
+        box-shadow: -180px 1px 1px 180px #43e5f7;
+        
+    }
+    input[type=color] {
+        border: 1px solid #858181;
+        margin: 5px 0 0 0;
+    }
+    input[type=file] {
+        margin: 5px 0 0 0;
+    }
+    .textAreaCSS {
+        color: rgb(0, 89, 255);
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold;
+    }
+    textarea#resultCssText {
+        margin: 4px;
+        width: 400px;
+        resize: none;
+        border-radius: 5px;
+    }
+    </style>
+    <script>
+        'use strict'
+    let shadowbox = document.querySelector('.example');
+    let textArea = document.querySelector('#resultCssText');
+    let inset = form.elements.inset;
+    let offsetX = form.elements.offsetX;
+    let offsetY = form.elements.offsetY;
+    let blurRadius = form.elements.blurRadius; 
+    let spreadRadius = form.elements.spreadRadius;
+    let color = form.elements.color;
+    let colorBcg = form.elements.colorBcg;
+    let transparent = form.elements.transparent;
+    let file = form.elements.file;
+    let insettext = ``;
+    let hex;
+    let bgc;
+    let rgb;
+    let rgbBgc;
+    let colorCode;
+    let bgcCode;
+
+
+    const parentShadow = shadowbox.offsetParent;
+    const shadowY = shadowbox.offsetLeft;
+    const shadowZ = shadowbox.offsetTop;
+    const shadowWidth = shadowbox.offsetWidth;
+    const shadowHeight = shadowbox.offsetHeight;
+
+    console.log(parentShadow);
+    console.log(shadowY);
+    console.log(shadowZ);
+    console.log(shadowWidth);
+    console.log(shadowHeight);
+
+
+
+    textArea.textContent = `${shadowbox.style.boxShadow}`;
+
+    form.addEventListener('input', function(event){
+        if(inset.checked) {
+            insettext = `inset`
+        } if(inset.checked == false) {
+            insettext = ``
+        }
+        
+        hex = color.value;
+        rgb = hex2rgb(hex);
+        bgc = colorBcg.value;
+        rgbBgc = hex2rgb(bgc);
+
+        function hex2rgb(colorHex) {
+            
+            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(colorHex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
+        colorCode = `${rgb.r}, ${rgb.g}, ${rgb.b}`;
+        bgcCode = `${rgbBgc.r}, ${rgbBgc.g}, ${rgbBgc.b}`;
+
+        shadowbox.style.boxShadow = `${insettext} rgb(${colorCode}, ${transparent.value}) ${offsetX.value}px ${offsetY.value}px ${blurRadius.value}px ${spreadRadius.value}px`;
+        textArea.textContent = `${shadowbox.style.boxShadow}`;
+
+        shadowbox.style.backgroundColor = `rgb(${bgcCode})`
+
+        
+    });
+
+
+
+    function previewFile(fileInput) {
+        let file = fileInput.files[0];
+        let reader = new FileReader();
+    
+        reader.addEventListener("load", function() {
+        setBackground(reader.result);
+        }, false);
+    
+        if (file) {
+        reader.readAsDataURL(file);
+        }
+    }
+    function setBackground(imageURL){
+        shadowbox.style.backgroundImage = "url(" + imageURL + ")";
+        shadowbox.style.backgroundSize = "cover";
+        shadowbox.style.backgroundRepeat = "no-repeat";
+        shadowbox.style.backgroundPosition = "center center";
+    }
+    </script>
+</body>
+</html>
